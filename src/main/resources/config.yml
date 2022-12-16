@@ -1,0 +1,21 @@
+###### FSBank Configuration ######
+
+# sql settings
+sql-conf:
+    host: localhost
+    port: 3306
+    database: stack
+    username: root
+    password: root
+
+# bank currency settings
+bank-conf:
+    name: "FSBank"
+
+currency-conf:
+    name: "FP"
+    symbol: "FP"
+    plural: "FP"
+    format: "0"
+    default: true
+    decimal-places: 2

@@ -1,17 +1,13 @@
-package pro.freeserver.alphakun.plugin.fsbank;
+package pro.freeserver.alphakun.plugin.fsbank
 
-import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.java.JavaPlugin
 
-public final class FSBank extends JavaPlugin {
-
-    @Override
-    public void onEnable() {
+class FSBank : JavaPlugin() {
+    override fun onEnable() {
         // Plugin startup logic
-
     }
 
-    @Override
-    public void onDisable() {
+    override fun onDisable() {
         // Plugin shutdown logic
     }
 }
