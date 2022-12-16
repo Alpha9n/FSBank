@@ -134,9 +134,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>io.github.jan-tennert.supabase</groupId>
-            <artifactId>storage-kt</artifactId>
-            <version>0.7.0-beta-2</version>
+            <groupId>com.github.supabase-community</groupId>
+            <artifactId>postgrest-kt</artifactId>
+            <version>0.2.0</version>
         </dependency>
     </dependencies>
 </project>

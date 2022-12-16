@@ -2,11 +2,8 @@
 
 # sql settings
 sql-conf:
-    host: localhost
-    port: 3306
-    database: stack
-    username: root
-    password: root
+    host: http://localhost:3306
+    service-key: xxxxxxxxxxxxxxxxx
 
 # bank currency settings
 bank-conf:
@@ -14,7 +11,6 @@ bank-conf:
 
 currency-conf:
     name: "FP"
-    symbol: "FP"
     plural: "FP"
     format: "0"
     default: true
