@@ -13,5 +13,5 @@ currency-conf:
     name: "FP"
     plural: "FP"
     format: "0"
-    default: true
-    decimal-places: 2
+
+config-version: 1
