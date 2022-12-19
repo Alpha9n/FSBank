@@ -5,3 +5,6 @@ api-version: 1.19
 softdepend: [ Vault ]
 authors: [ Alphakun ]
 description: FREESERVERの財布と銀行の全権を担うPLです
+commands:
+  debug:
+    description: getuserwallet

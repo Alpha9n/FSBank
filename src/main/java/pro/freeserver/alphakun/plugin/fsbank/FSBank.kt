@@ -4,6 +4,8 @@ import io.supabase.postgrest.PostgrestDefaultClient
 import org.bukkit.plugin.java.JavaPlugin
 import pro.freeserver.alphakun.plugin.fsbank.api.LoadConfig
 import pro.freeserver.alphakun.plugin.fsbank.api.Postgrest
+import pro.freeserver.alphakun.plugin.fsbank.command.DebugCommand
+
 
 class FSBank : JavaPlugin() {
     override fun onEnable() {
@@ -11,10 +13,15 @@ class FSBank : JavaPlugin() {
         fsBank = this
         loadConfig = LoadConfig()
         client = Postgrest(loadConfig.host, loadConfig.serviceKey).getClient()
+        loadCommand()
     }
 
     override fun onDisable() {
         // Plugin shutdown logic
+    }
+
+    fun loadCommand() {
+        getCommand("debug")?.setExecutor(DebugCommand())
     }
 
     companion object {

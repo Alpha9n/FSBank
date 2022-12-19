@@ -20,8 +20,8 @@ class LoadConfig {
     init {
         if (configVer == 1) {
             if (config.contains(sqlPath + "host") || config.contains(sqlPath + "serviceKey")) {
-                host = config.getString("host")?:"null"
-                serviceKey = config.getString("service-key")?:"null"
+                host = config.getString(sqlPath + "host")?:"null"
+                serviceKey = config.getString(sqlPath + "service-key")?:"null"
             } else {
                 Bukkit.getLogger().warning("Config.ymlにhostかservice-keyが存在しません。")
             }
@@ -33,29 +33,4 @@ class LoadConfig {
             Bukkit.getLogger().warning("Config.ymlのバージョンが不正です。削除して再起動してください。")
         }
     }
-
-    fun getHost(): String {
-        return host
-    }
-
-    fun getServiceKey(): String {
-        return serviceKey
-    }
-
-    fun getBankName(): String {
-        return bankName
-    }
-
-    fun getCurrencyName(): String {
-        return currencyName
-    }
-
-    fun getCurrencyPlural(): String {
-        return currencyPlural
-    }
-
-    fun getCurrencyFormat(): String {
-        return currencyFormat
-    }
-
 }
