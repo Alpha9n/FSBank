@@ -1,6 +1,9 @@
 package pro.freeserver.alphakun.plugin.fsbank.api
 
 class MainAPI {
+    companion object {
+        val FRACTIONAL_DIGITS = 2
+    }
 
 }
 
@@ -21,7 +24,6 @@ enum class MessagePrefix(val text: String) {
     WARN("§e[§fFSBank§e]§f:§r"),
     ERROR("§c[§fFSBank§c]§f:§r")
 }
-
 enum class TableName(val text: String) {
     FREESERVER_USER("freeserver_user"),
     BANK_BALANCES("bank_balances"),

@@ -3,7 +3,7 @@ package pro.freeserver.alphakun.plugin.fsbank.api
 import org.bukkit.Bukkit
 import pro.freeserver.alphakun.plugin.fsbank.FSBank.Companion.fsBank
 
-class LoadConfig {
+class MainConfig {
     private val config = fsBank.config
     private val configVer = config.getInt("config-version")
     private val sqlPath = "sql-conf."
