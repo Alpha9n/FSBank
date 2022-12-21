@@ -1,8 +1,22 @@
 package pro.freeserver.alphakun.plugin.fsbank.api
 
+import pro.freeserver.alphakun.plugin.fsbank.FSBank
+import kotlin.math.floor
+
 class MainAPI {
+
+    fun currencyFormat(value: Double): String {
+        val placeholder = FSBank.mainConfig.currencyFormat
+        val plural = FSBank.mainConfig.currencyPlural
+        val intPart = floor(value)
+        val fracPart = value - intPart
+        return placeholder
+            .replace("{major}", intPart.toString(), true)
+            .replace("{minor}", fracPart.toString(), true)
+            .replace("{plural}", plural, true)
+    }
     companion object {
-        val FRACTIONAL_DIGITS = 2
+        const val FRACTIONAL_DIGITS = 2
     }
 
 }

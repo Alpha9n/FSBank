@@ -2,8 +2,11 @@ package pro.freeserver.alphakun.plugin.fsbank.economy
 
 import net.milkbowl.vault.economy.Economy
 import net.milkbowl.vault.economy.EconomyResponse
+import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
+import pro.freeserver.alphakun.plugin.fsbank.FSBank
 import pro.freeserver.alphakun.plugin.fsbank.api.MainAPI
+import pro.freeserver.alphakun.plugin.fsbank.handler.TransactionHandler
 
 class VaultEconomy(): Economy {
     override fun isEnabled(): Boolean {
@@ -23,31 +26,31 @@ class VaultEconomy(): Economy {
     }
 
     override fun format(amount: Double): String {
-        TODO("Not yet implemented")
+        return MainAPI().currencyFormat(amount)
     }
 
     override fun currencyNamePlural(): String {
-        TODO("Not yet implemented")
+        return FSBank.mainConfig.currencyPlural
     }
 
     override fun currencyNameSingular(): String {
-        TODO("Not yet implemented")
+        return FSBank.mainConfig.currencyName
     }
 
     override fun hasAccount(playerName: String?): Boolean {
-        TODO("Not yet implemented")
+        return TransactionHandler.hasAccount(Bukkit.getPlayerUniqueId(playerName?:""))
     }
 
     override fun hasAccount(player: OfflinePlayer?): Boolean {
-        TODO("Not yet implemented")
+        return TransactionHandler.hasAccount(player!!.uniqueId)
     }
 
     override fun hasAccount(playerName: String?, worldName: String?): Boolean {
-        TODO("Not yet implemented")
+        return TransactionHandler.hasAccount(Bukkit.getPlayerUniqueId(playerName?:""))
     }
 
     override fun hasAccount(player: OfflinePlayer?, worldName: String?): Boolean {
-        TODO("Not yet implemented")
+        return TransactionHandler.hasAccount(player!!.uniqueId)
     }
 
     override fun getBalance(playerName: String?): Double {

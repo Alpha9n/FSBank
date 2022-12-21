@@ -4,6 +4,7 @@ import pro.freeserver.alphakun.plugin.fsbank.FSBank
 import pro.freeserver.alphakun.plugin.fsbank.api.TableName
 import pro.freeserver.alphakun.plugin.fsbank.type.FreeserverUser
 import pro.freeserver.alphakun.plugin.fsbank.type.WalletBalances
+import java.util.*
 
 class TransactionHandler {
     fun getUserWalletAmount(uuid: String = ""): String? {
@@ -33,6 +34,20 @@ class TransactionHandler {
             return response.discord_id
         }catch (e: Exception) {
             return null
+        }
+    }
+
+    companion object {
+        fun hasAccount(uuid: UUID?): Boolean {
+            if (uuid != null) {
+                try {
+
+                    return true
+                } catch(e: Exception) {
+                    return false
+                }
+            }
+            return false
         }
     }
 }

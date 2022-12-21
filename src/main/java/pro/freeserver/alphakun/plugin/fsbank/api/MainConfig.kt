@@ -15,20 +15,20 @@ class MainConfig {
     var bankName: String = "Bank"
     var currencyName: String = "YEN"
     var currencyPlural: String = "YEN"
-    var currencyFormat: String = "0"
+    var currencyFormat: String = "{major}.{minor}{plural}"
 
     init {
-        if (configVer == 1) {
+        if (configVer == 2) {
             if (config.contains(sqlPath + "host") || config.contains(sqlPath + "serviceKey")) {
-                host = config.getString(sqlPath + "host")?:"null"
-                serviceKey = config.getString(sqlPath + "service-key")?:"null"
+                host = config.getString(sqlPath + "host")?:host
+                serviceKey = config.getString(sqlPath + "service-key")?:serviceKey
             } else {
                 Bukkit.getLogger().warning("Config.ymlにhostかservice-keyが存在しません。")
             }
-            bankName = config.getString(bankPath + "bank-name")?:"Bank"
-            currencyName = config.getString(currencyPath + "currency-name")?:"YEN"
-            currencyPlural = config.getString(currencyPath + "currency-plural")?:"YEN"
-            currencyFormat = config.getString(currencyPath + "currency-format")?:"0"
+            bankName = config.getString(bankPath + "bank-name")?:bankName
+            currencyName = config.getString(currencyPath + "currency-name")?:currencyName
+            currencyPlural = config.getString(currencyPath + "currency-plural")?:currencyPlural
+            currencyFormat = config.getString(currencyPath + "currency-format")?:currencyFormat
         } else {
             Bukkit.getLogger().warning("Config.ymlのバージョンが不正です。削除して再起動してください。")
         }
