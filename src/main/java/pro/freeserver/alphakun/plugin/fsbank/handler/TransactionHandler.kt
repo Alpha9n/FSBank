@@ -1,5 +1,6 @@
 package pro.freeserver.alphakun.plugin.fsbank.handler
 
+import net.milkbowl.vault.economy.EconomyResponse
 import pro.freeserver.alphakun.plugin.fsbank.FSBank.Companion.client
 import pro.freeserver.alphakun.plugin.fsbank.utils.TableName
 import pro.freeserver.alphakun.plugin.fsbank.consts.FreeserverUser
@@ -52,5 +53,13 @@ class TransactionHandler {
 
     fun hasWalletAmount(uuid: UUID? = UUID.randomUUID(), amount: Double): Boolean {
         return amount >= (getUserWalletAmount(uuid)?: 0.00)
+    }
+
+    fun depositPlayer(uuid: UUID? = UUID.randomUUID(), amount: Double): EconomyResponse {
+
+    }
+
+    fun withdrawPlayer(uuid: UUID? = UUID.randomUUID(), amount: Double): Boolean {
+        depositPlayer(uuid, -amount)
     }
 }

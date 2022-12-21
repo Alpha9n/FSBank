@@ -7,6 +7,8 @@ import org.bukkit.OfflinePlayer
 import pro.freeserver.alphakun.plugin.fsbank.FSBank
 import pro.freeserver.alphakun.plugin.fsbank.handler.TransactionHandler
 import pro.freeserver.alphakun.plugin.fsbank.utils.GeneralUtil
+import java.util.*
+
 class VaultEconomy(): Economy {
     private val trans = TransactionHandler()
     override fun isEnabled(): Boolean {
@@ -83,6 +85,17 @@ class VaultEconomy(): Economy {
 
     override fun has(player: OfflinePlayer?, worldName: String?, amount: Double): Boolean {
         return trans.hasWalletAmount(player?.uniqueId, amount)
+    }
+
+    private fun withdrawPlayer(player: UUID, amount: Double): EconomyResponse {
+        if (amount < 0) {
+            return EconomyResponse(0.0, 0.0, EconomyResponse.ResponseType.FAILURE, "Cannot withdraw negative funds")
+        }
+        if (trans.withdrawPlayer(player, amount)) {
+            return EconomyResponse()
+        } else {
+            return EconomyResponse(0.0, 0.0, EconomyResponse.ResponseType.FAILURE, "Account does not exist")
+        }
     }
 
     override fun withdrawPlayer(playerName: String?, amount: Double): EconomyResponse {
