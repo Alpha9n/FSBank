@@ -1,9 +1,9 @@
-package pro.freeserver.alphakun.plugin.fsbank.api
+package pro.freeserver.alphakun.plugin.fsbank.utils
 
 import pro.freeserver.alphakun.plugin.fsbank.FSBank
 import kotlin.math.floor
 
-class MainAPI {
+class GeneralUtil {
 
     fun currencyFormat(value: Double): String {
         val placeholder = FSBank.mainConfig.currencyFormat

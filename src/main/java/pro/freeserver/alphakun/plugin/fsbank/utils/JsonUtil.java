@@ -1,4 +1,4 @@
-package pro.freeserver.alphakun.plugin.fsbank.api;
+package pro.freeserver.alphakun.plugin.fsbank.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

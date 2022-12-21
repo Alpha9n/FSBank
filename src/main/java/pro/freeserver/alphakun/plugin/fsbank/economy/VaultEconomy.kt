@@ -5,10 +5,10 @@ import net.milkbowl.vault.economy.EconomyResponse
 import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
 import pro.freeserver.alphakun.plugin.fsbank.FSBank
-import pro.freeserver.alphakun.plugin.fsbank.api.MainAPI
 import pro.freeserver.alphakun.plugin.fsbank.handler.TransactionHandler
-
+import pro.freeserver.alphakun.plugin.fsbank.utils.GeneralUtil
 class VaultEconomy(): Economy {
+    private val trans = TransactionHandler()
     override fun isEnabled(): Boolean {
         return true
     }
@@ -22,11 +22,11 @@ class VaultEconomy(): Economy {
     }
 
     override fun fractionalDigits(): Int {
-        return MainAPI.FRACTIONAL_DIGITS
+        return GeneralUtil.FRACTIONAL_DIGITS
     }
 
     override fun format(amount: Double): String {
-        return MainAPI().currencyFormat(amount)
+        return GeneralUtil().currencyFormat(amount)
     }
 
     override fun currencyNamePlural(): String {
@@ -38,51 +38,51 @@ class VaultEconomy(): Economy {
     }
 
     override fun hasAccount(playerName: String?): Boolean {
-        return TransactionHandler.hasAccount(Bukkit.getPlayerUniqueId(playerName?:""))
+        return trans.hasWalletAccount(Bukkit.getPlayerUniqueId(playerName?:""))
     }
 
     override fun hasAccount(player: OfflinePlayer?): Boolean {
-        return TransactionHandler.hasAccount(player!!.uniqueId)
+        return trans.hasWalletAccount(player!!.uniqueId)
     }
 
     override fun hasAccount(playerName: String?, worldName: String?): Boolean {
-        return TransactionHandler.hasAccount(Bukkit.getPlayerUniqueId(playerName?:""))
+        return trans.hasWalletAccount(Bukkit.getPlayerUniqueId(playerName?:""))
     }
 
     override fun hasAccount(player: OfflinePlayer?, worldName: String?): Boolean {
-        return TransactionHandler.hasAccount(player!!.uniqueId)
+        return trans.hasWalletAccount(player!!.uniqueId)
     }
 
     override fun getBalance(playerName: String?): Double {
-        TODO("Not yet implemented")
+        return trans.getWalletAccount(Bukkit.getPlayerUniqueId(playerName?:""))?.balance?.toDouble()?: 0.00
     }
 
     override fun getBalance(player: OfflinePlayer?): Double {
-        TODO("Not yet implemented")
+        return trans.getWalletAccount(player?.uniqueId)?.balance?.toDouble()?: 0.00
     }
 
     override fun getBalance(playerName: String?, world: String?): Double {
-        TODO("Not yet implemented")
+        return trans.getWalletAccount(Bukkit.getPlayerUniqueId(playerName?:""))?.balance?.toDouble()?: 0.00
     }
 
     override fun getBalance(player: OfflinePlayer?, world: String?): Double {
-        TODO("Not yet implemented")
+        return trans.getWalletAccount(player?.uniqueId)?.balance?.toDouble()?: 0.00
     }
 
     override fun has(playerName: String?, amount: Double): Boolean {
-        TODO("Not yet implemented")
+        return trans.hasWalletAmount(Bukkit.getPlayerUniqueId(playerName?: ""),amount)
     }
 
     override fun has(player: OfflinePlayer?, amount: Double): Boolean {
-        TODO("Not yet implemented")
+        return trans.hasWalletAmount(player?.uniqueId,amount)
     }
 
     override fun has(playerName: String?, worldName: String?, amount: Double): Boolean {
-        TODO("Not yet implemented")
+        return trans.hasWalletAmount(Bukkit.getPlayerUniqueId(playerName?: ""), amount)
     }
 
     override fun has(player: OfflinePlayer?, worldName: String?, amount: Double): Boolean {
-        TODO("Not yet implemented")
+        return trans.hasWalletAmount(player?.uniqueId, amount)
     }
 
     override fun withdrawPlayer(playerName: String?, amount: Double): EconomyResponse {

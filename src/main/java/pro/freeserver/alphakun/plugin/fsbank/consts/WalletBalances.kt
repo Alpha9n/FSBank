@@ -1,4 +1,4 @@
-package pro.freeserver.alphakun.plugin.fsbank.type
+package pro.freeserver.alphakun.plugin.fsbank.consts
 
 import java.util.UUID
 

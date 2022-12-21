@@ -2,8 +2,8 @@ package pro.freeserver.alphakun.plugin.fsbank
 
 import io.supabase.postgrest.PostgrestDefaultClient
 import org.bukkit.plugin.java.JavaPlugin
-import pro.freeserver.alphakun.plugin.fsbank.api.MainConfig
-import pro.freeserver.alphakun.plugin.fsbank.api.Postgrest
+import pro.freeserver.alphakun.plugin.fsbank.config.MainConfig
+import pro.freeserver.alphakun.plugin.fsbank.databases.Postgrest
 import pro.freeserver.alphakun.plugin.fsbank.command.DebugCommand
 
 

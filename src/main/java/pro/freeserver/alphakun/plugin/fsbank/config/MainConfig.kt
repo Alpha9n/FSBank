@@ -1,4 +1,4 @@
-package pro.freeserver.alphakun.plugin.fsbank.api
+package pro.freeserver.alphakun.plugin.fsbank.config
 
 import org.bukkit.Bukkit
 import pro.freeserver.alphakun.plugin.fsbank.FSBank.Companion.fsBank

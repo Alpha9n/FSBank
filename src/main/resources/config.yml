@@ -4,18 +4,13 @@
 sql-conf:
     host: http://localhost:3306
     service-key: xxxxxxxxxxxxxxxxx
-    user-table: freeserver_user
-    wallet-column: wallet_id
-    bank-column: bank_id
-    wallet-table: wallet_balances
-    bank-table: bank_balances
 
 # bank currency settings
 bank-conf:
     name: "FSBank"
 
 currency-conf:
-    default-balance: 1000
+    default-balance: 1000.0
     name: "FP"
     plural: "FP"
     format: "{major}.{minor}{plural}"

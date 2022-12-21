@@ -6,8 +6,9 @@ import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.command.TabCompleter
 import org.bukkit.entity.Player
-import pro.freeserver.alphakun.plugin.fsbank.api.MessagePrefix
+import pro.freeserver.alphakun.plugin.fsbank.utils.MessagePrefix
 import pro.freeserver.alphakun.plugin.fsbank.handler.TransactionHandler
+import pro.freeserver.alphakun.plugin.fsbank.utils.GeneralUtil
 
 class DebugCommand: CommandExecutor, TabCompleter {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
@@ -24,7 +25,7 @@ class DebugCommand: CommandExecutor, TabCompleter {
                         playerID = Bukkit.getPlayerUniqueId(args[1]).toString()
                         message = MessagePrefix.INFO.text + "${args[1]}の所持金"
                     }
-                    val amount = trans.getUserWalletAmount(playerID)
+                    val amount = GeneralUtil().currencyFormat(trans.getUserWalletAmount(Bukkit.getPlayerUniqueId(playerID))?:0.00)
                     if (amount == null) {
                         sender.sendMessage(MessagePrefix.ERROR.text + "ユーザーが見つかりませんでした")
                         return false
@@ -44,7 +45,7 @@ class DebugCommand: CommandExecutor, TabCompleter {
                         playerID = Bukkit.getPlayerUniqueId(args[1]).toString()
                         message = MessagePrefix.INFO.text + "${args[1]}のDiscordID:"
                     }
-                    val discordID = trans.getDiscordID(playerID)
+                    val discordID = trans.getDiscordID(Bukkit.getPlayerUniqueId(playerID))
                     if (discordID == null) {
                         sender.sendMessage(MessagePrefix.ERROR.text + "ユーザーが見つかりませんでした")
                         return false
