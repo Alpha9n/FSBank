@@ -5,18 +5,29 @@ import kotlin.math.floor
 
 class GeneralUtil {
 
-    fun currencyFormat(value: Double): String {
+    fun currencyFormat(value: Long): String {
         val placeholder = FSBank.mainConfig.currencyFormat
         val plural = FSBank.mainConfig.currencyPlural
-        val intPart = floor(value)
-        val fracPart = value - intPart
+        val intPart = value / MULTIPLIER
+        val fracPart = value % MULTIPLIER
         return placeholder
             .replace("{major}", intPart.toString(), true)
             .replace("{minor}", fracPart.toString(), true)
             .replace("{plural}", plural, true)
     }
+
+    fun toLong(value: Double): Long {
+        return (value * MULTIPLIER).toLong()
+    }
+
+    fun toDouble(value: Long): Double {
+        val intPart = value / MULTIPLIER
+        val fracPart = value % MULTIPLIER
+        return (intPart + fracPart).toDouble()
+    }
     companion object {
         const val FRACTIONAL_DIGITS = 2
+        const val MULTIPLIER = 100
     }
 
 }

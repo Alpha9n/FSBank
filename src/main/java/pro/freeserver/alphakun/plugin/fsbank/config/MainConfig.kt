@@ -12,6 +12,7 @@ class MainConfig {
 
     var host: String = "null"
     var serviceKey: String = "null"
+    var defaultBalance: Double = 1000.00
     var bankName: String = "Bank"
     var currencyName: String = "YEN"
     var currencyPlural: String = "YEN"
@@ -25,6 +26,7 @@ class MainConfig {
             } else {
                 Bukkit.getLogger().warning("Config.ymlにhostかservice-keyが存在しません。")
             }
+            defaultBalance = config.getDouble(currencyPath + "default-balance")
             bankName = config.getString(bankPath + "bank-name")?:bankName
             currencyName = config.getString(currencyPath + "currency-name")?:currencyName
             currencyPlural = config.getString(currencyPath + "currency-plural")?:currencyPlural

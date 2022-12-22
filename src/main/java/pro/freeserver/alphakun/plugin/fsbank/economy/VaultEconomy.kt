@@ -11,6 +11,7 @@ import java.util.*
 
 class VaultEconomy(): Economy {
     private val trans = TransactionHandler()
+    private val gUtil = GeneralUtil()
     override fun isEnabled(): Boolean {
         return true
     }
@@ -28,7 +29,7 @@ class VaultEconomy(): Economy {
     }
 
     override fun format(amount: Double): String {
-        return GeneralUtil().currencyFormat(amount)
+        return gUtil.currencyFormat(gUtil.toLong(amount))
     }
 
     override fun currencyNamePlural(): String {
@@ -36,7 +37,7 @@ class VaultEconomy(): Economy {
     }
 
     override fun currencyNameSingular(): String {
-        return FSBank.mainConfig.currencyName
+        return FSBank.mainConfig.currencyPlural
     }
 
     override fun hasAccount(playerName: String?): Boolean {
@@ -56,19 +57,19 @@ class VaultEconomy(): Economy {
     }
 
     override fun getBalance(playerName: String?): Double {
-        return trans.getWalletAccount(Bukkit.getPlayerUniqueId(playerName?:""))?.balance?.toDouble()?: 0.00
+        return trans.getUserWalletAmount(Bukkit.getPlayerUniqueId(playerName?:""))?: 0.00
     }
 
     override fun getBalance(player: OfflinePlayer?): Double {
-        return trans.getWalletAccount(player?.uniqueId)?.balance?.toDouble()?: 0.00
+        return trans.getUserWalletAmount(player?.uniqueId)?: 0.00
     }
 
     override fun getBalance(playerName: String?, world: String?): Double {
-        return trans.getWalletAccount(Bukkit.getPlayerUniqueId(playerName?:""))?.balance?.toDouble()?: 0.00
+        return trans.getUserWalletAmount(Bukkit.getPlayerUniqueId(playerName?:""))?: 0.00
     }
 
     override fun getBalance(player: OfflinePlayer?, world: String?): Double {
-        return trans.getWalletAccount(player?.uniqueId)?.balance?.toDouble()?: 0.00
+        return trans.getUserWalletAmount(player?.uniqueId)?: 0.00
     }
 
     override fun has(playerName: String?, amount: Double): Boolean {
@@ -87,48 +88,78 @@ class VaultEconomy(): Economy {
         return trans.hasWalletAmount(player?.uniqueId, amount)
     }
 
-    private fun withdrawPlayer(player: UUID, amount: Double): EconomyResponse {
+    private fun withdrawPlayer(player: UUID?, amount: Double): EconomyResponse {
         if (amount < 0) {
             return EconomyResponse(0.0, 0.0, EconomyResponse.ResponseType.FAILURE, "Cannot withdraw negative funds")
         }
         if (trans.withdrawPlayer(player, amount)) {
-            return EconomyResponse()
+            return EconomyResponse(0.0, trans.getUserWalletAmount(player)?:0.0, EconomyResponse.ResponseType.SUCCESS, "OK")
         } else {
             return EconomyResponse(0.0, 0.0, EconomyResponse.ResponseType.FAILURE, "Account does not exist")
         }
     }
 
     override fun withdrawPlayer(playerName: String?, amount: Double): EconomyResponse {
-        TODO("Not yet implemented")
+        return withdrawPlayer(Bukkit.getPlayerUniqueId(playerName?:""), amount)
     }
 
     override fun withdrawPlayer(player: OfflinePlayer?, amount: Double): EconomyResponse {
-        TODO("Not yet implemented")
+        return withdrawPlayer(player?.uniqueId, amount)
     }
 
     override fun withdrawPlayer(playerName: String?, worldName: String?, amount: Double): EconomyResponse {
-        TODO("Not yet implemented")
+        return withdrawPlayer(Bukkit.getPlayerUniqueId(playerName?:""), amount)
     }
 
     override fun withdrawPlayer(player: OfflinePlayer?, worldName: String?, amount: Double): EconomyResponse {
-        TODO("Not yet implemented")
+        return withdrawPlayer(player?.uniqueId, amount)
+    }
+
+    private fun depositPlayer(player: UUID?, amount: Double): EconomyResponse {
+        if (amount < 0) {
+            return EconomyResponse(0.0, 0.0, EconomyResponse.ResponseType.FAILURE, "Cannot withdraw negative funds")
+        }
+        if (trans.depositPlayer(player, amount)) {
+            return EconomyResponse(0.0, trans.getUserWalletAmount(player)?:0.0, EconomyResponse.ResponseType.SUCCESS, "OK")
+        } else {
+            return EconomyResponse(0.0, 0.0, EconomyResponse.ResponseType.FAILURE, "Account does not exist")
+        }
     }
 
     override fun depositPlayer(playerName: String?, amount: Double): EconomyResponse {
-        TODO("Not yet implemented")
+        return depositPlayer(Bukkit.getPlayerUniqueId(playerName?: ""),amount)
     }
 
     override fun depositPlayer(player: OfflinePlayer?, amount: Double): EconomyResponse {
-        TODO("Not yet implemented")
+        return depositPlayer(player?.uniqueId, amount)
     }
 
     override fun depositPlayer(playerName: String?, worldName: String?, amount: Double): EconomyResponse {
-        TODO("Not yet implemented")
+        return depositPlayer(Bukkit.getPlayerUniqueId(playerName?: ""),amount)
     }
 
     override fun depositPlayer(player: OfflinePlayer?, worldName: String?, amount: Double): EconomyResponse {
-        TODO("Not yet implemented")
+        return depositPlayer(player?.uniqueId, amount)
     }
+    override fun createPlayerAccount(playerName: String?): Boolean {
+        return trans.createWalletAccount(Bukkit.getPlayerUniqueId(playerName?:""))
+    }
+
+    override fun createPlayerAccount(player: OfflinePlayer?): Boolean {
+        return trans.createWalletAccount(player?.uniqueId)
+    }
+
+    override fun createPlayerAccount(playerName: String?, worldName: String?): Boolean {
+        return trans.createWalletAccount(Bukkit.getPlayerUniqueId(playerName?:""))
+    }
+
+    override fun createPlayerAccount(player: OfflinePlayer?, worldName: String?): Boolean {
+        return trans.createWalletAccount(player?.uniqueId)
+    }
+
+
+
+    // TODO("銀行機能実装は財布実装が終わってから")
 
     override fun createBank(name: String?, player: String?): EconomyResponse {
         TODO("Not yet implemented")
@@ -178,19 +209,4 @@ class VaultEconomy(): Economy {
         TODO("Not yet implemented")
     }
 
-    override fun createPlayerAccount(playerName: String?): Boolean {
-        TODO("Not yet implemented")
-    }
-
-    override fun createPlayerAccount(player: OfflinePlayer?): Boolean {
-        TODO("Not yet implemented")
-    }
-
-    override fun createPlayerAccount(playerName: String?, worldName: String?): Boolean {
-        TODO("Not yet implemented")
-    }
-
-    override fun createPlayerAccount(player: OfflinePlayer?, worldName: String?): Boolean {
-        TODO("Not yet implemented")
-    }
 }

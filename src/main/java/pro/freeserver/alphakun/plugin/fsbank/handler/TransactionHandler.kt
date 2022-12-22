@@ -1,10 +1,12 @@
 package pro.freeserver.alphakun.plugin.fsbank.handler
 
 import net.milkbowl.vault.economy.EconomyResponse
+import pro.freeserver.alphakun.plugin.fsbank.FSBank
 import pro.freeserver.alphakun.plugin.fsbank.FSBank.Companion.client
 import pro.freeserver.alphakun.plugin.fsbank.utils.TableName
 import pro.freeserver.alphakun.plugin.fsbank.consts.FreeserverUser
 import pro.freeserver.alphakun.plugin.fsbank.consts.WalletBalances
+import pro.freeserver.alphakun.plugin.fsbank.utils.GeneralUtil
 import java.util.*
 
 class TransactionHandler {
@@ -48,18 +50,57 @@ class TransactionHandler {
 
     fun getUserWalletAmount(uuid: UUID? = UUID.randomUUID()): Double? {
         if(uuid == null) return null
-        return getWalletAccount(uuid)?.balance?.toDouble()
+        return GeneralUtil().toDouble(getWalletAccount(uuid)?.balance?: return null)
+    }
+
+    fun getUserWalletAmountAsLong(uuid: UUID? = UUID.randomUUID()): Long? {
+        if(uuid == null) return null
+        return getWalletAccount(uuid)?.balance?: return null
     }
 
     fun hasWalletAmount(uuid: UUID? = UUID.randomUUID(), amount: Double): Boolean {
         return amount >= (getUserWalletAmount(uuid)?: 0.00)
     }
 
-    fun depositPlayer(uuid: UUID? = UUID.randomUUID(), amount: Double): EconomyResponse {
+    fun setWalletAmount(uuid: UUID? = UUID.randomUUID(), amount: Double): Boolean {
+        if (uuid == null) return false
+        var longAmount = GeneralUtil().toLong(amount)
+        var putAmount = (getUserWalletAmountAsLong(uuid)?: 0) + longAmount
+        return try {
+            client
+                .from<WalletBalances>(TableName.WALLET_BALANCES.text)
+                .update(mapOf("balance" to putAmount))
+                .eq("mcuuid", uuid)
+                .limit(1)
+                .execute()
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
 
+    fun depositPlayer(uuid: UUID? = UUID.randomUUID(), amount: Double): Boolean {
+        return setWalletAmount(uuid, amount)
     }
 
     fun withdrawPlayer(uuid: UUID? = UUID.randomUUID(), amount: Double): Boolean {
-        depositPlayer(uuid, -amount)
+        return setWalletAmount(uuid, -amount)
+    }
+
+    fun createWalletAccount(uuid: UUID? = UUID.randomUUID()): Boolean {
+        if (!hasWalletAccount(uuid)) {
+            return try {
+                val defaultBalance = GeneralUtil().toLong(FSBank.mainConfig.defaultBalance)
+                client
+                    .from<WalletBalances>(TableName.WALLET_BALANCES.text)
+                    // uuidはhasWalletAccountでnullではないことが確認されているためアサートしています
+                    .insert(WalletBalances(balance = defaultBalance, mcuuid = uuid!!))
+                    .execute()
+                    true
+            } catch (e: Exception) {
+                false
+            }
+        }
+        return false
     }
 }
