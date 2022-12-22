@@ -10,7 +10,7 @@ bank-conf:
     name: "FSBank"
 
 currency-conf:
-    default-balance: 1000.0
+    default-balance: 1000.00
     name: "FP"
     plural: "FP"
     format: "{major}.{minor}{plural}"
