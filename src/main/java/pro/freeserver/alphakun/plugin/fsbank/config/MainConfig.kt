@@ -5,10 +5,10 @@ import pro.freeserver.alphakun.plugin.fsbank.FSBank.Companion.fsBank
 
 class MainConfig {
     private val config = fsBank.config
-    private val configVer = config.getInt("config-version")
     private val sqlPath = "sql-conf."
     private val bankPath = "bank-conf."
     private val currencyPath = "currency-conf."
+    private var configVer = 0
 
     var host: String = "null"
     var serviceKey: String = "null"
@@ -19,6 +19,7 @@ class MainConfig {
     var currencyFormat: String = "{major}.{minor}{plural}"
 
     init {
+        this.configVer = config.getInt("config-version")
         if (configVer == 2) {
             if (config.contains(sqlPath + "host") || config.contains(sqlPath + "serviceKey")) {
                 host = config.getString(sqlPath + "host")?:host

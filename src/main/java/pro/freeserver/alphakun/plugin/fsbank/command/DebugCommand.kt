@@ -25,11 +25,7 @@ class DebugCommand: CommandExecutor, TabCompleter {
                         playerID = Bukkit.getPlayerUniqueId(args[1]).toString()
                         message = MessagePrefix.INFO.text + "${args[1]}の所持金"
                     }
-                    val amount = GeneralUtil().currencyFormat(trans.getUserWalletAmount(Bukkit.getPlayerUniqueId(playerID))?:0.00)
-                    if (amount == null) {
-                        sender.sendMessage(MessagePrefix.ERROR.text + "ユーザーが見つかりませんでした")
-                        return false
-                    }
+                    val amount = GeneralUtil().currencyFormat(GeneralUtil().toLong(trans.getUserWalletAmount(Bukkit.getPlayerUniqueId(playerID))?:0.00))
                     sender.sendMessage(message + amount)
                     return true
                 }

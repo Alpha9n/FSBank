@@ -1,8 +1,10 @@
 package pro.freeserver.alphakun.plugin.fsbank.handler
 
 import net.milkbowl.vault.economy.EconomyResponse
+import org.bukkit.Bukkit
 import pro.freeserver.alphakun.plugin.fsbank.FSBank
 import pro.freeserver.alphakun.plugin.fsbank.FSBank.Companion.client
+import pro.freeserver.alphakun.plugin.fsbank.FSBank.Companion.fsBank
 import pro.freeserver.alphakun.plugin.fsbank.utils.TableName
 import pro.freeserver.alphakun.plugin.fsbank.consts.FreeserverUser
 import pro.freeserver.alphakun.plugin.fsbank.consts.WalletBalances
