@@ -107,6 +107,10 @@
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
+        <repository>
+            <id>panda-repository</id>
+            <url>https://repo.panda-lang.org/releases</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -142,6 +146,11 @@
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>2.10</version>
+        </dependency>
+        <dependency>
+            <groupId>dev.rollczi.litecommands</groupId>
+            <artifactId>bukkit-adventure</artifactId>
+            <version>2.7.0</version>
         </dependency>
     </dependencies>
 </project>

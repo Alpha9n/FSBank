@@ -1,6 +1,11 @@
 package pro.freeserver.alphakun.plugin.fsbank.utils
 
+import net.kyori.adventure.audience.Audience
+import net.kyori.adventure.text.Component
+import org.bukkit.command.CommandSender
+import org.bukkit.entity.Player
 import pro.freeserver.alphakun.plugin.fsbank.FSBank
+import java.math.BigDecimal
 import kotlin.math.floor
 
 class GeneralUtil {
@@ -11,8 +16,8 @@ class GeneralUtil {
         val intPart = value / MULTIPLIER
         val fracPart = value % MULTIPLIER
         return placeholder
-            .replace("{major}", intPart.toString(), true)
-            .replace("{minor}", fracPart.toString(), true)
+            .replace("{major}", BigDecimal.valueOf(intPart).toPlainString(), true)
+            .replace("{minor}", BigDecimal.valueOf(fracPart).toPlainString(), true)
             .replace("{plural}", plural, true)
     }
 
@@ -28,6 +33,9 @@ class GeneralUtil {
     companion object {
         const val FRACTIONAL_DIGITS = 2
         const val MULTIPLIER = 100
+        fun sendMessage(player: Player, message: String, messageType: MessagePrefix = MessagePrefix.INFO) {
+            player.sendMessage(Component.text(messageType.text + message))
+        }
     }
 
 }

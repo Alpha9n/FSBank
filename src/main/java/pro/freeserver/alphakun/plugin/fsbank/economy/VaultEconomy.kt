@@ -57,7 +57,7 @@ class VaultEconomy(): Economy {
     }
 
     override fun getBalance(playerName: String?): Double {
-        return trans.getUserWalletAmount(Bukkit.getPlayerUniqueId(playerName?:""))?: 0.00
+        return trans.getUserWalletAmount(Bukkit.getOfflinePlayer(playerName?:"").uniqueId)?: 0.00
     }
 
     override fun getBalance(player: OfflinePlayer?): Double {
@@ -65,7 +65,7 @@ class VaultEconomy(): Economy {
     }
 
     override fun getBalance(playerName: String?, world: String?): Double {
-        return trans.getUserWalletAmount(Bukkit.getPlayerUniqueId(playerName?:""))?: 0.00
+        return trans.getUserWalletAmount(Bukkit.getOfflinePlayer(playerName?:"").uniqueId)?: 0.00
     }
 
     override fun getBalance(player: OfflinePlayer?, world: String?): Double {
@@ -73,7 +73,7 @@ class VaultEconomy(): Economy {
     }
 
     override fun has(playerName: String?, amount: Double): Boolean {
-        return trans.hasWalletAmount(Bukkit.getPlayerUniqueId(playerName?: ""),amount)
+        return trans.hasWalletAmount(Bukkit.getOfflinePlayer(playerName?:"").uniqueId,amount)
     }
 
     override fun has(player: OfflinePlayer?, amount: Double): Boolean {
@@ -81,7 +81,7 @@ class VaultEconomy(): Economy {
     }
 
     override fun has(playerName: String?, worldName: String?, amount: Double): Boolean {
-        return trans.hasWalletAmount(Bukkit.getPlayerUniqueId(playerName?: ""), amount)
+        return trans.hasWalletAmount(Bukkit.getOfflinePlayer(playerName?:"").uniqueId, amount)
     }
 
     override fun has(player: OfflinePlayer?, worldName: String?, amount: Double): Boolean {
@@ -100,7 +100,7 @@ class VaultEconomy(): Economy {
     }
 
     override fun withdrawPlayer(playerName: String?, amount: Double): EconomyResponse {
-        return withdrawPlayer(Bukkit.getPlayerUniqueId(playerName?:""), amount)
+        return withdrawPlayer(Bukkit.getOfflinePlayer(playerName?:"").uniqueId, amount)
     }
 
     override fun withdrawPlayer(player: OfflinePlayer?, amount: Double): EconomyResponse {
@@ -108,7 +108,7 @@ class VaultEconomy(): Economy {
     }
 
     override fun withdrawPlayer(playerName: String?, worldName: String?, amount: Double): EconomyResponse {
-        return withdrawPlayer(Bukkit.getPlayerUniqueId(playerName?:""), amount)
+        return withdrawPlayer(Bukkit.getOfflinePlayer(playerName?:"").uniqueId, amount)
     }
 
     override fun withdrawPlayer(player: OfflinePlayer?, worldName: String?, amount: Double): EconomyResponse {
@@ -127,7 +127,7 @@ class VaultEconomy(): Economy {
     }
 
     override fun depositPlayer(playerName: String?, amount: Double): EconomyResponse {
-        return depositPlayer(Bukkit.getPlayerUniqueId(playerName?: ""),amount)
+        return depositPlayer(Bukkit.getOfflinePlayer(playerName?:"").uniqueId,amount)
     }
 
     override fun depositPlayer(player: OfflinePlayer?, amount: Double): EconomyResponse {
@@ -135,14 +135,14 @@ class VaultEconomy(): Economy {
     }
 
     override fun depositPlayer(playerName: String?, worldName: String?, amount: Double): EconomyResponse {
-        return depositPlayer(Bukkit.getPlayerUniqueId(playerName?: ""),amount)
+        return depositPlayer(Bukkit.getOfflinePlayer(playerName?:"").uniqueId,amount)
     }
 
     override fun depositPlayer(player: OfflinePlayer?, worldName: String?, amount: Double): EconomyResponse {
         return depositPlayer(player?.uniqueId, amount)
     }
     override fun createPlayerAccount(playerName: String?): Boolean {
-        return trans.createWalletAccount(Bukkit.getPlayerUniqueId(playerName?:""))
+        return trans.createWalletAccount(Bukkit.getOfflinePlayer(playerName?:"").uniqueId)
     }
 
     override fun createPlayerAccount(player: OfflinePlayer?): Boolean {
@@ -150,7 +150,7 @@ class VaultEconomy(): Economy {
     }
 
     override fun createPlayerAccount(playerName: String?, worldName: String?): Boolean {
-        return trans.createWalletAccount(Bukkit.getPlayerUniqueId(playerName?:""))
+        return trans.createWalletAccount(Bukkit.getOfflinePlayer(playerName?:"").uniqueId)
     }
 
     override fun createPlayerAccount(player: OfflinePlayer?, worldName: String?): Boolean {

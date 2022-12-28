@@ -28,10 +28,10 @@ class MainConfig {
                 Bukkit.getLogger().warning("Config.ymlにhostかservice-keyが存在しません。")
             }
             defaultBalance = config.getDouble(currencyPath + "default-balance")
-            bankName = config.getString(bankPath + "bank-name")?:bankName
-            currencyName = config.getString(currencyPath + "currency-name")?:currencyName
-            currencyPlural = config.getString(currencyPath + "currency-plural")?:currencyPlural
-            currencyFormat = config.getString(currencyPath + "currency-format")?:currencyFormat
+            bankName = config.getString(bankPath + "name")?:bankName
+            currencyName = config.getString(currencyPath + "name")?:currencyName
+            currencyPlural = config.getString(currencyPath + "plural")?:currencyPlural
+            currencyFormat = config.getString(currencyPath + "format")?:currencyFormat
         } else {
             Bukkit.getLogger().warning("Config.ymlのバージョンが不正です。削除して再起動してください。")
         }
