@@ -8,15 +8,14 @@ import org.bukkit.command.CommandSender
 import org.bukkit.plugin.RegisteredServiceProvider
 import org.bukkit.plugin.ServicePriority
 import org.bukkit.plugin.java.JavaPlugin
-import pro.freeserver.alphakun.plugin.fsbank.command.Help
-import pro.freeserver.alphakun.plugin.fsbank.command.Show
+import pro.freeserver.alphakun.plugin.fsbank.command.FSBankCommand
 import pro.freeserver.alphakun.plugin.fsbank.config.MainConfig
 import pro.freeserver.alphakun.plugin.fsbank.databases.Postgrest
 import pro.freeserver.alphakun.plugin.fsbank.economy.VaultEconomy
 
 
 class FSBank : JavaPlugin() {
-    lateinit var liteCommand: LiteCommands<CommandSender>
+    private lateinit var liteCommand: LiteCommands<CommandSender>
     override fun onEnable() {
         saveDefaultConfig()
         fsBank = this
@@ -35,8 +34,7 @@ class FSBank : JavaPlugin() {
     private fun loadCommand() {
         this.liteCommand = LitePaperAdventureFactory.builder(server, "FSBank")
             .commandInstance(
-                Help(),
-                Show()
+                FSBankCommand()
             ).register()
     }
 

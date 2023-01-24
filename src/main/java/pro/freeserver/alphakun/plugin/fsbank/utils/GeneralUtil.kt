@@ -30,6 +30,7 @@ class GeneralUtil {
         val fracPart = value % MULTIPLIER
         return (intPart + fracPart).toDouble()
     }
+
     companion object {
         const val FRACTIONAL_DIGITS = 2
         const val MULTIPLIER = 100
