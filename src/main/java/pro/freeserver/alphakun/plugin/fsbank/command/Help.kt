@@ -1,12 +1,7 @@
 package pro.freeserver.alphakun.plugin.fsbank.command
 
-import dev.rollczi.litecommands.argument.Arg
-import dev.rollczi.litecommands.command.execute.Execute
-import dev.rollczi.litecommands.command.route.Route
-import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import pro.freeserver.alphakun.plugin.fsbank.utils.GeneralUtil
-import pro.freeserver.alphakun.plugin.fsbank.utils.MessagePrefix
 
 object Help {
     private var gu = GeneralUtil

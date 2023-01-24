@@ -5,10 +5,15 @@
 plugins {
     `java-library`
     `maven-publish`
+    id("xyz.jpenilla.run-paper") version "2.0.1"
 }
 
+group = "pro.freeserver.alphakun.plugin"
+version = "0.0.1-dev"
+description = "FSBank"
+java.sourceCompatibility = JavaVersion.VERSION_1_8
+
 repositories {
-    mavenLocal()
     maven {
         url = uri("https://repo.papermc.io/repository/maven-public/")
     }
@@ -40,11 +45,6 @@ dependencies {
     compileOnly("com.github.MilkBowl:VaultAPI:1.7")
 }
 
-group = "pro.freeserver.alphakun.plugin"
-version = "0.0.1-dev"
-description = "FSBank"
-java.sourceCompatibility = JavaVersion.VERSION_1_8
-
 publishing {
     publications.create<MavenPublication>("maven") {
         from(components["java"])
@@ -58,3 +58,12 @@ tasks.withType<JavaCompile>() {
 tasks.withType<Javadoc>() {
     options.encoding = "UTF-8"
 }
+
+//tasks {
+//    runServer {
+//        // Configure the Minecraft version for our task.
+//        // This is the only required configuration besides applying the plugin.
+//        // Your plugin's jar (or shadowJar if present) will be used automatically.
+//        minecraftVersion("1.19.3")
+//    }
+//}
