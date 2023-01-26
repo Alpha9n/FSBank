@@ -22,9 +22,9 @@ class FSBank : JavaPlugin() {
         mainConfig = MainConfig()
         println("bankName: " + mainConfig.bankName + " host: " + mainConfig.host)
         client = Postgrest(mainConfig.host, mainConfig.serviceKey).getClient()
-        loadCommand()
         hookVault()
         setupVault()
+        loadCommand()
     }
 
     override fun onDisable() {

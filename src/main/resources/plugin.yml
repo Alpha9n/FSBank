@@ -1,7 +1,7 @@
 name: FSBank
-version: '${project.version}'
+version: '${version}'
 main: pro.freeserver.alphakun.plugin.fsbank.FSBank
-api-version: 1.18
+api-version: 1.19
 softdepend: [ Vault ]
 authors: [ Alphakun ]
 description: FREESERVERの財布と銀行の全権を担うPLです

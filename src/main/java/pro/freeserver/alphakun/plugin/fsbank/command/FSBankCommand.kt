@@ -3,6 +3,7 @@ package pro.freeserver.alphakun.plugin.fsbank.command
 import dev.rollczi.litecommands.argument.Arg
 import dev.rollczi.litecommands.command.execute.Execute
 import dev.rollczi.litecommands.command.route.Route
+import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
@@ -25,7 +26,7 @@ class FSBankCommand {
     }
 
     @Execute(route= "pay")
-    fun pay(sender: Player, @Arg dist: OfflinePlayer, @Arg amount: BigDecimal) {
-        Pay.defaultPay(sender,dist, GeneralUtil().toDouble(amount.toLong()),econ)
+    fun pay(sender: Player, @Arg dist: String, @Arg amount: Long) {
+        Pay.defaultPay(sender, Bukkit.getOfflinePlayer(dist), GeneralUtil().toDouble(amount),econ)
     }
 }
