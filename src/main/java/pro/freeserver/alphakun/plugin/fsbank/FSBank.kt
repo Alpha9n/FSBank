@@ -12,6 +12,7 @@ import pro.freeserver.alphakun.plugin.fsbank.command.FSBankCommand
 import pro.freeserver.alphakun.plugin.fsbank.config.MainConfig
 import pro.freeserver.alphakun.plugin.fsbank.databases.Postgrest
 import pro.freeserver.alphakun.plugin.fsbank.economy.VaultEconomy
+import pro.freeserver.alphakun.plugin.fsbank.handler.event.EventTest
 
 
 class FSBank : JavaPlugin() {
@@ -25,6 +26,7 @@ class FSBank : JavaPlugin() {
         hookVault()
         setupVault()
         loadCommand()
+        registerEvent()
     }
 
     override fun onDisable() {
@@ -36,6 +38,10 @@ class FSBank : JavaPlugin() {
             .commandInstance(
                 FSBankCommand()
             ).register()
+    }
+
+    private fun registerEvent() {
+        server.pluginManager.registerEvents(EventTest(), this)
     }
 
     private fun hookVault() {

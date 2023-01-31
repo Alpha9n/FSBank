@@ -35,7 +35,7 @@ class GeneralUtil {
         const val FRACTIONAL_DIGITS = 2
         const val MULTIPLIER = 100
         fun sendMessage(player: Player, message: String, messageType: MessagePrefix = MessagePrefix.INFO) {
-            player.sendMessage(Component.text(messageType.text + message))
+            player.sendMessage(messageType.text + message)
         }
     }
 

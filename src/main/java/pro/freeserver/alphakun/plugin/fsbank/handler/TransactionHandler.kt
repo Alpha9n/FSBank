@@ -1,14 +1,11 @@
 package pro.freeserver.alphakun.plugin.fsbank.handler
 
-import net.milkbowl.vault.economy.EconomyResponse
-import org.bukkit.Bukkit
 import pro.freeserver.alphakun.plugin.fsbank.FSBank
 import pro.freeserver.alphakun.plugin.fsbank.FSBank.Companion.client
-import pro.freeserver.alphakun.plugin.fsbank.FSBank.Companion.fsBank
-import pro.freeserver.alphakun.plugin.fsbank.utils.TableName
 import pro.freeserver.alphakun.plugin.fsbank.consts.FreeserverUser
 import pro.freeserver.alphakun.plugin.fsbank.consts.WalletBalances
 import pro.freeserver.alphakun.plugin.fsbank.utils.GeneralUtil
+import pro.freeserver.alphakun.plugin.fsbank.utils.TableName
 import java.util.*
 
 class TransactionHandler {
@@ -32,10 +29,11 @@ class TransactionHandler {
     fun getWalletAccount(uuid: UUID?): WalletBalances? {
         if (uuid == null) return null
         return try {
+            val walID = getFSUser(uuid).wallet_id ?: return null
             client
                 .from<WalletBalances>(TableName.WALLET_BALANCES.text)
                 .select("*")
-                .eq("mcuuid", uuid)
+                .eq("id", walID)
                 .limit(1)
                 .single()
                 .executeAndGetSingle()
@@ -104,5 +102,13 @@ class TransactionHandler {
             }
         }
         return false
+    }
+
+    private fun getFSUser(uuid: UUID): FreeserverUser {
+        return client
+            .from<FreeserverUser>(TableName.FREESERVER_USER.text)
+            .select("mcuuid, wallet_id, bank_id")
+            .eq("mcuuid", uuid)
+            .executeAndGetSingle<FreeserverUser>()
     }
 }
