@@ -10,6 +10,7 @@ import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import panda.std.Option
 import pro.freeserver.alphakun.plugin.fsbank.FSBank
+import pro.freeserver.alphakun.plugin.fsbank.handler.TransactionHandler
 
 @Route(name = "fsbank", aliases = ["money"])
 class FSBankCommand {
@@ -44,11 +45,28 @@ class FSBankCommand {
     }
 
     @Execute(route= "pay", required = 2)
-    fun pay(sender: CommandSender, @Arg @Name("player") dist: String, @Arg @Name("amount") amount: Double) {
+    fun pay(sender: CommandSender, @Arg @Name("player") dist: Player, @Arg @Name("amount") amount: Double) {
         try{
-            Pay.defaultPay(sender as Player, Bukkit.getOfflinePlayer(dist), amount, econ)
+            Pay.defaultPay(sender as Player, dist, amount, econ)
         }catch (e: Exception) {
             Bukkit.getLogger().severe(e.toString())
         }
+    }
+
+    @Execute(route = "getfsuser")
+    fun getUser(sender: CommandSender) {
+        if (sender is Player) {
+            sender.sendMessage("あなたの名前は${sender.name}です。")
+            var fsusr = TransactionHandler().getFSUser(sender.uniqueId)
+            sender.sendMessage("あなたのUUIDは${fsusr.mcuuid}です。")
+            sender.sendMessage("あなたのWalletIDは${fsusr.wallet_id}です。")
+            sender.sendMessage("あなたのBankIDは${fsusr.bank_id}です。")
+            sender.sendMessage("あなたのDiscordIDは${fsusr.discord_id}です。")
+        }
+    }
+
+    @Execute(route = "getwallet")
+    fun getWallet(sender: CommandSender) {
+
     }
 }

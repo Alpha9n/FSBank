@@ -2,6 +2,7 @@ package pro.freeserver.alphakun.plugin.fsbank.handler
 
 import pro.freeserver.alphakun.plugin.fsbank.FSBank
 import pro.freeserver.alphakun.plugin.fsbank.FSBank.Companion.client
+import pro.freeserver.alphakun.plugin.fsbank.FSBank.Companion.mainConfig
 import pro.freeserver.alphakun.plugin.fsbank.consts.FreeserverUser
 import pro.freeserver.alphakun.plugin.fsbank.consts.WalletBalances
 import pro.freeserver.alphakun.plugin.fsbank.utils.GeneralUtil
@@ -71,7 +72,7 @@ class TransactionHandler {
                 .from<WalletBalances>(TableName.WALLET_BALANCES.text)
                 .update(mapOf("balance" to putAmount))
                 .eq("mcuuid", uuid)
-                .limit(1)
+                .single()
                 .execute()
             true
         } catch (e: Exception) {
@@ -91,11 +92,19 @@ class TransactionHandler {
         if (!hasWalletAccount(uuid)) {
             return try {
                 val defaultBalance = GeneralUtil().toLong(FSBank.mainConfig.defaultBalance)
-                client
+                val walletUUID = UUID.randomUUID()
+                var response = client
                     .from<WalletBalances>(TableName.WALLET_BALANCES.text)
-                    // uuidはhasWalletAccountでnullではないことが確認されているためアサートしています
-                    .insert(WalletBalances(balance = defaultBalance, mcuuid = uuid!!))
+                    .insert(WalletBalances(id = walletUUID, balance = defaultBalance, mcuuid = uuid!!))
                     .execute()
+                println(response.body)
+                response = client
+                    .from<FreeserverUser>(TableName.FREESERVER_USER.text)
+                    .update(mapOf("wallet_id" to walletUUID))
+                    .eq("mcuuid", uuid)
+                    .single()
+                    .execute()
+                println(response.body)
                     true
             } catch (e: Exception) {
                 false
@@ -104,11 +113,14 @@ class TransactionHandler {
         return false
     }
 
-    private fun getFSUser(uuid: UUID): FreeserverUser {
-        return client
+    fun getFSUser(uuid: UUID): FreeserverUser {
+        var response = client
             .from<FreeserverUser>(TableName.FREESERVER_USER.text)
-            .select("mcuuid, wallet_id, bank_id")
+            .select("*")
             .eq("mcuuid", uuid)
+            .limit(1)
+            .single()
             .executeAndGetSingle<FreeserverUser>()
+        return response
     }
 }
